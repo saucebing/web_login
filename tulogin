@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#cd ~/.dotfile/bin
+
+username=hch13
+#clvault-get $username > /dev/null
+#password=`xclip -o`
+password=hch7223522
+python -c "from tunet_log import *; login('$username','$password')"
