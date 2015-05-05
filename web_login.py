@@ -5,6 +5,8 @@ import time
 username = "hch13"
 password = "hch7223522"
 f = open('web_login.log','a')
+filename = "gpu_ip.log"
+f2 = open(filename,'w')
 
 LOGIN_STR = 'curl -d "username=%(username)s&password=%(password)s&drop=0&type=1&n=100" http://net.tsinghua.edu.cn/cgi-bin/do_login'
 CHECK_STR = 'curl -d "action=check_online" http://net.tsinghua.edu.cn/cgi-bin/do_login'
@@ -40,6 +42,14 @@ def mail():
   MAIL_STR = "echo \"" + get_local_ip("eth0") + "\" | mail -s IP_Address 54656566@qq.com"
   os.system(MAIL_STR);
 
+def scp():
+  ip = get_local_ip("eth0")
+  f2.write("gpu ip: " + ip);
+  f2.close();
+  SCP_STR = "scp " + filename + " cbw@101.6.240.212:ip/" + filename
+  print SCP_STR
+  os.system(SCP_STR)
+
 index = 0
 result = check_login()
 f.write("==================================================================================================\n")
@@ -53,3 +63,4 @@ while result == "" and index < 60:
   index += 1
   f.write(current_time() + " Num: " + str(index) + "\n")
 mail()
+f.close()
